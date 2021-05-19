@@ -63,6 +63,32 @@
                        }
                    });
 
+               }else if(text == "australia"){
+                   $('#stateShow').show();
+                   $('#inputState').find('option').not(':first').remove();
+                   //ajax request
+                   $.ajax({
+                       url: 'getState/'+id,
+                       type:'get',
+                       dataType: 'json',
+                       success: function(response){
+                           var len = 0;
+                           if(response['data'] != null){
+                               len = response['data'].length;
+                           }
+                           if(len > 0){
+                               //Read data in the state option that related with country
+                               for(var i=0;i<len;i++){
+                                   var id = response['data'][i].id;
+                                   var name = response['data'][i].name;
+                                   var option = "<option value='"+id+"'>"+name+"</option>";
+                                   $('#inputState').append(option);
+                               }
+                           }
+
+                       }
+                   });
+
                }else {
                    $('#stateShow').hide(); //hide
                }
